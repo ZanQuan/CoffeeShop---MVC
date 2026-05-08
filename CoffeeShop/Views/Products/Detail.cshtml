@@ -1,0 +1,19 @@
+﻿@model CoffeeShop.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model?.Name</title>
+</head>
+<body>
+    <h1>@Model?.Name</h1>
+    <img width="300" src="@Model?.ImageUrl" />
+    <p>@Model?.Detail</p>
+    <p><strong>Giá: @Model?.Price.ToString("C")</strong></p>
+    <a asp-controller="Products" asp-action="Shop">← Quay lại Shop</a>
+</body>
+</html>

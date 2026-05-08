@@ -1,0 +1,27 @@
+﻿@model IEnumerable<CoffeeShop.Models.Product>
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coffee Shop</title>
+</head>
+<body>
+    <h1>Shop Coffee</h1>
+
+    @foreach (var item in Model)
+    {
+        <div style="margin-bottom:20px; border:1px solid #ccc; padding:10px;">
+            <img width="200" src="@item.ImageUrl" />
+            <h3>@item.Name</h3>
+            <p>@item.Detail</p>
+            <p><strong>@item.Price.ToString("C")</strong></p>
+            <a asp-controller="Products" asp-action="Detail"
+               asp-route-id="@item.Id">Xem chi tiết</a>
+        </div>
+    }
+</body>
+</html>
