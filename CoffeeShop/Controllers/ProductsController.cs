@@ -1,4 +1,5 @@
 ﻿using CoffeeShop.Models.Interfaces;
+using CoffeeShop.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoffeeShop.Controllers
@@ -19,7 +20,12 @@ namespace CoffeeShop.Controllers
 
         public IActionResult Detail(int id)
         {
-            return View(_productRepository.GetProductDetail(id));
+            var product = _productRepository.GetProductDetail(id);
+            if (product != null)
+            {
+                return View(product);
+            }
+            return NotFound();
         }
     }
 }
