@@ -15,6 +15,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>(
     sp => ShoppingCartRepository.GetCart(sp));
 
+// Đăng ký OrderRepository 
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
 // Đăng ký DbContext
 builder.Services.AddDbContext<CoffeeshopDbContext>(options =>
     options.UseSqlServer(
