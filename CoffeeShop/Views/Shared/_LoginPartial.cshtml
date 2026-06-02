@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <!-- Đã đăng nhập: hiện tên user + nút Logout -->
+    <li class="nav-item dropdown">
+        <a class="nav-link link text-black dropdown-toggle show display-4"
+           data-toggle="dropdown-submenu"
+           data-bs-toggle="dropdown"
+           data-bs-auto-close="outside"
+           aria-expanded="false">
+            Hi @user.UserName
+            <span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>
+        </a>
+        <div class="dropdown-menu show" aria-labelledby="dropdown-751" data-bs-popper="none">
+            @if (await UserManager.IsInRoleAsync(user, "Admin"))
+            {
+                <a class="text-black show dropdown-item display-4"
+                   asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    Admin Panel
+                </a>
+            }
+            <a class="text-black show dropdown-item display-4"
+               asp-area="Identity" asp-page="/Account/Logout"
+               asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                Logout
+            </a>
+            <a class="text-black show dropdown-item display-4"
+               asp-controller="Orders" asp-action="ListOrders">Your order</a>
+        </div>
+    </li>
+}
+else
+{
+    <!-- Chưa đăng nhập: hiện Register + Login -->
+    <li class="nav-item dropdown">
+        <a class="nav-link link text-black dropdown-toggle show display-4"
+           data-toggle="dropdown-submenu"
+           data-bs-toggle="dropdown"
+           data-bs-auto-close="outside"
+           aria-expanded="false">
+            <span class="mobi-mbri mobi-mbri-user-2 mbr-iconfont mbr-iconfont-btn"></span>
+        </a>
+        <div class="dropdown-menu show" aria-labelledby="dropdown-751" data-bs-popper="none">
+            <a class="text-black show dropdown-item display-4"
+               asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="text-black show dropdown-item display-4"
+               asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+    </li>
+}

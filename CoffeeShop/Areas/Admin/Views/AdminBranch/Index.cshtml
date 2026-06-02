@@ -1,0 +1,41 @@
+﻿@model List<CoffeeShop.Models.Branch>
+<h1 class="h3 mb-4 text-gray-800">Branches</h1>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>STT</th>
+                    <th>Branch Name</th>
+                    <th>Address</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@Model[i].Name</td>
+                        <td>@Model[i].Address</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@Model[i].Id"
+                               class="text-primary">Edit</a>
+                        </td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@Model[i].Id"
+                                  method="post" style="display:inline">
+                                <button type="submit" class="btn btn-link text-danger p-0"
+                                        onclick="return confirm('Xóa branch này?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Create" class="btn btn-primary">Add</a>
+    </div>
+</div>

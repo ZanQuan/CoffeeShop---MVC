@@ -1,0 +1,53 @@
+﻿@{
+    var user = ViewBag.User as Microsoft.AspNetCore.Identity.IdentityUser;
+    var allRoles = ViewBag.AllRoles as List<string>;
+    var userRoles = ViewBag.UserRoles as IList<string>;
+}
+<h1 class="h3 mb-4 text-gray-800">Manage Role — @user.UserName</h1>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr><th>Role</th><th>Trạng thái</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var role in allRoles)
+                {
+                    var hasRole = userRoles.Contains(role);
+                    <tr>
+                        <td>@role</td>
+                        <td>
+                            @if (hasRole)
+                            {
+                                <span class="badge badge-success">Đã có</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">Chưa có</span>
+                            }
+                        </td>
+                        <td>
+                            @if (hasRole)
+                            {
+                                <form asp-action="RemoveRole" method="post" style="display:inline">
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <input type="hidden" name="role" value="@role" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Gỡ Role</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="AssignRole" method="post" style="display:inline">
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <input type="hidden" name="role" value="@role" />
+                                    <button type="submit" class="btn btn-sm btn-primary">Gán Role</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Index" class="btn btn-secondary">← Quay lại</a>
+    </div>
+</div>

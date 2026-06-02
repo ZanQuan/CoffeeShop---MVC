@@ -1,0 +1,15 @@
+﻿@model CoffeeShop.Models.Category
+<h1 class="h3 mb-4 text-gray-800">Edit Category</h1>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name">Category Name</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Update</button>
+            <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+        </form>
+    </div>
+</div>

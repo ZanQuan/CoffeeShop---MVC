@@ -1,0 +1,43 @@
+﻿@model List<CoffeeShop.Models.Product>
+<h1 class="h3 mb-4 text-gray-800">Products</h1>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>STT</th>
+                        <th>Product</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@Model[i].Name</td>
+                            <td><img src="@Model[i].ImageUrl" width="60" height="60" style="object-fit:cover"></td>
+                            <td>@Model[i].Price.ToString("0.00")</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@Model[i].Id" class="text-primary">Edit</a>
+                            </td>
+                            <td>
+                                <form asp-action="Delete" asp-route-id="@Model[i].Id" method="post" style="display:inline">
+                                    <button type="submit" class="btn btn-link text-danger p-0"
+                                            onclick="return confirm('Xóa sản phẩm này?')">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">Add</a>
+    </div>
+</div>

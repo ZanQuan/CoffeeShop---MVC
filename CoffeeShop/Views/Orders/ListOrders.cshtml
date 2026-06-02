@@ -1,0 +1,41 @@
+﻿@model List<CoffeeShop.Models.Order>
+<br />
+<br />
+<br />
+<div class="container">
+    <h2>List your orders</h2>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Stt</th>
+                <th>Time order</th>
+                <th>Detail</th>
+                <th>Shipping Address</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var order = Model[i];
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@order.OrderPlaced.ToString("dd/MM/yyyy h:mm:ss tt")</td>
+                    <td>
+                        @foreach (var detail in order.OrderDetails)
+                        {
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <img src="@detail.Product.ImageUrl" width="50" height="50" style="object-fit:cover" />
+                                <span>@detail.Quantity x @detail.Product.Name x @detail.Price.ToString("0.00")</span>
+                            </div>
+                        }
+                    </td>
+                    <td>@order.Address</td>
+                    <td>@order.OrderTotal.ToString("0.00")</td>
+                    <td><span class="text-success">Success</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

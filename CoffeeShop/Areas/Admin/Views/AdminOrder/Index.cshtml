@@ -1,0 +1,33 @@
+﻿@model List<CoffeeShop.Models.Order>
+<h1 class="h3 mb-4 text-gray-800">Orders</h1>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Ngày đặt</th>
+                        <th>Khách hàng</th>
+                        <th>Địa chỉ</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in Model)
+                    {
+                        <tr>
+                            <td>@o.Id</td>
+                            <td>@o.OrderPlaced.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@o.FirstName @o.LastName<br />@o.Email</td>
+                            <td>@o.Address</td>
+                            <td>@o.OrderTotal.ToString("0.00")</td>
+                            <td><span class="badge badge-success">Success</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

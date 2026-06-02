@@ -1,5 +1,6 @@
 ﻿using CoffeeShop.Data;
 using CoffeeShop.Models.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Models.Services
 {
@@ -14,7 +15,15 @@ namespace CoffeeShop.Models.Services
             this.dbContext = dbContext;
             this.shoppingCartRepository = shoppingCartRepository;
         }
-
+        public List<Order> GetOrdersByUser(string userId)
+        {
+            return dbContext.Order
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.OrderPlaced)
+                .ToList();
+        }
         public void PlaceOrder(Order order)
         {
             var shoppingCartItems = shoppingCartRepository.GetAllShoppingCartItems();
