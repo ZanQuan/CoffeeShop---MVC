@@ -2,6 +2,8 @@
 using CoffeeShop.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShop.Areas.Admin.Controllers
 {
@@ -14,10 +16,19 @@ namespace CoffeeShop.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View(_db.Products.ToList());
+            // Include Category và Branch khi query
+            var products = _db.Products
+                .Include(p => p.Category)
+                .Include(p => p.Branch)
+                .ToList();
+            return View(products);
         }
 
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            LoadDropdowns();
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Create(Product product)
@@ -31,6 +42,7 @@ namespace CoffeeShop.Areas.Admin.Controllers
         {
             var p = _db.Products.Find(id);
             if (p == null) return NotFound();
+            LoadDropdowns();
             return View(p);
         }
 
@@ -48,6 +60,13 @@ namespace CoffeeShop.Areas.Admin.Controllers
             var p = _db.Products.Find(id);
             if (p != null) { _db.Products.Remove(p); _db.SaveChanges(); }
             return RedirectToAction("Index");
+        }
+
+        // Helper: truyền danh sách Category + Branch xuống View
+        private void LoadDropdowns()
+        {
+            ViewBag.Categories = new SelectList(_db.Categories.ToList(), "Id", "Name");
+            ViewBag.Branches = new SelectList(_db.Branches.ToList(), "Id", "Name");
         }
     }
 }

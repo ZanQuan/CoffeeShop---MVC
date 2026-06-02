@@ -9,6 +9,8 @@
                         <th>STT</th>
                         <th>Product</th>
                         <th>Image</th>
+                        <th>Category</th>
+                        <th>Branch</th>
                         <th>Price</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -20,14 +22,22 @@
                         <tr>
                             <td>@i</td>
                             <td>@Model[i].Name</td>
-                            <td><img src="@Model[i].ImageUrl" width="60" height="60" style="object-fit:cover"></td>
+                            <td>
+                                <img src="@Model[i].ImageUrl" width="60" height="60"
+                                     style="object-fit:cover">
+                            </td>
+                            <td>@(Model[i].Category?.Name ?? "-")</td>
+                            <td>@(Model[i].Branch?.Name ?? "-")</td>
                             <td>@Model[i].Price.ToString("0.00")</td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@Model[i].Id" class="text-primary">Edit</a>
+                                <a asp-action="Edit" asp-route-id="@Model[i].Id"
+                                   class="text-primary">Edit</a>
                             </td>
                             <td>
-                                <form asp-action="Delete" asp-route-id="@Model[i].Id" method="post" style="display:inline">
-                                    <button type="submit" class="btn btn-link text-danger p-0"
+                                <form asp-action="Delete" asp-route-id="@Model[i].Id"
+                                      method="post" style="display:inline">
+                                    <button type="submit"
+                                            class="btn btn-link text-danger p-0"
                                             onclick="return confirm('Xóa sản phẩm này?')">
                                         Delete
                                     </button>

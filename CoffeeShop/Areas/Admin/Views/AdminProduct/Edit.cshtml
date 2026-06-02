@@ -20,6 +20,23 @@
                 <label>Detail</label>
                 <textarea asp-for="Detail" class="form-control"></textarea>
             </div>
+
+            <!-- ← THÊM 2 DROPDOWN NÀY -->
+            <div class="form-group">
+                <label>Category</label>
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories"
+                        class="form-control">
+                    <option value="">-- Select Category --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Branch</label>
+                <select asp-for="BranchId" asp-items="ViewBag.Branches"
+                        class="form-control">
+                    <option value="">-- Select Branch --</option>
+                </select>
+            </div>
+
             <div class="form-check mb-3">
                 <input asp-for="IsTrendingProduct" class="form-check-input" />
                 <label class="form-check-label">Trending Product</label>
